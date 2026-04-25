@@ -46,7 +46,6 @@ jobs:
             docker rm all-ci-demo || true
             docker pull ${{ secrets.DOCKER_USERNAME }}/all-demo
             docker run -d --name all-ci-demo -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/all-demo
-        
 
 
 
