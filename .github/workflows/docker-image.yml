@@ -34,20 +34,18 @@ jobs:
     - name: Push Image to Docker Hub
       run: docker push ${{ secrets.DOCKER_USERNAME }}/all-demo
 
-    - name: SSH and Deploy to Ec2
+    - name: SSH and Deploy to EC2
       uses: appleboy/ssh-action@v1
       with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        port: 22
-        script: |
-          echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker stop all-ci-demo || true
-          docker rm all-ci-demo || true
-          docker pull ${{ secrets.DOCKER_USERNAME }}/all-demo
-          docker run -d --name all-ci-demo -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/all-demo
-          
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+            docker stop all-ci-demo || true
+            docker rm all-ci-demo || true
+            docker pull ${{ secrets.DOCKER_USERNAME }}/all-demo
+            docker run -d --name all-ci-demo -p 80:8080 ${{ secrets.DOCKER_USERNAME }}/all-demo
         
 
 
